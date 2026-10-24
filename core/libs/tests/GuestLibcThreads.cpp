@@ -53,6 +53,7 @@ void* APS5_VABI _Tss_get_nid_postfix(int key);
 int APS5_VABI _Tss_set_nid_postfix(int key, void* value);
 int APS5_VABI _Thrd_equal_nid_postfix(void* first, void* second);
 void* APS5_VABI _Thrd_current_nid_postfix(void);
+void* APS5_VABI _Thrd_id_nid_postfix(void);
 int APS5_VABI _Mtx_current_owns_nid_postfix(void** handle);
 int APS5_VABI _ZNSt8__sce_v29_Mtx_initEPP13pthread_mutexi_nid_postfix(void** mutex, int type);
 int APS5_VABI _ZNSt8__sce_v219_Mtx_init_with_nameEPP13pthread_mutexiPKc_nid_postfix(void** mutex, int type, const char* name);
@@ -387,6 +388,7 @@ static void ForwardedCalls() {
     Require(_Tss_set_nid_postfix(8, &flag) == success && forwardLog.key == 8 && forwardLog.value == &flag);
     Require(_Thrd_equal_nid_postfix(&flag, &key) == 1 && forwardLog.first == &flag && forwardLog.second == &key);
     Require(_Thrd_current_nid_postfix() == &forwardLog.key);
+    Require(_Thrd_id_nid_postfix() == _Thrd_current_nid_postfix());
     Require(_Mtx_current_owns_nid_postfix(nullptr) == 1);
 
     RegisterThreadForwards_nid_no_patch(nullptr);
